@@ -1,0 +1,24 @@
+<label class="label">{{label}}</label>
+
+<input type="text" [dropSpecialCharacters]="false" mask="{{inputMask}}" class="input" [formControl]="control"
+    [ngClass]="{ 'not-valid': showErrors() }">
+
+<ng-container *ngIf="showErrors()">
+
+    <div class="help not-valid" *ngIf="control.errors?.['required']">
+        Value is required.
+    </div>
+
+    <div class="help not-valid" *ngIf="control.errors?.['minlength']">
+        Value you entered is too short.
+    </div>
+
+    <div class="help not-valid" *ngIf="control.errors?.['maxlength']">
+        Value you entered is too long.
+    </div>
+
+    <div class="help not-valid" *ngIf="control.errors?.['pattern']">
+        Invalid format.
+    </div>
+
+</ng-container>

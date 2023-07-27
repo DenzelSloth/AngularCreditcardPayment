@@ -1,0 +1,47 @@
+<app-card [name]="cardForm.get('name')?.value || 'Card Holder'"
+    [cardNumber]="cardForm.get('cardNumber')?.value || '**** **** **** ****'"
+    [expirationDate]="cardForm.get('expirationDate')?.value || 'MM/YY'">
+</app-card>
+
+<form class="card-form" [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+    <div class="name-input">
+        <app-validated-input label="Name of card holder" [control]="cardForm.controls.name"></app-validated-input>
+    </div>
+
+    <div class="card-input">
+        <app-validated-input label="Credit card number" inputMask="0000 0000 0000 0000"
+            [control]="cardForm.controls.cardNumber"></app-validated-input>
+        <div class="rect rect3"></div>
+        <div class="rect rect2"></div>
+        <div class="rect rect1"></div>
+    </div>
+
+
+    <div class="container-two-columns">
+        <div class="exp-input">
+            <app-validated-input label="Expiration" inputMask="00/00"
+                [control]="cardForm.controls.expirationDate"></app-validated-input>
+            <button class="button-payment" [disabled]="cardForm.invalid" type="submit" (click)="myModal.show()">Make
+                Payment</button>
+        </div>
+        <div class="cvv-input">
+            <app-validated-input label="CVV" inputMask="000"
+                [control]="cardForm.controls.cvvCode"></app-validated-input>
+            <button class="button-cancel" type="button" (click)="onResetClick()">Cancel</button>
+            <div class="tooltip">&#9432;
+                <span class="tooltiptext">Card Verification Value</span>
+            </div>
+        </div>
+    </div>
+</form>
+
+<dialog #myModal>
+    <div class="modal">
+        <div class="modal-content">
+            <h1>Sucess payment</h1>
+            <button (click)="myModal.close(); this.cardForm.reset();">
+                Close
+            </button>
+        </div>
+    </div>
+</dialog>
